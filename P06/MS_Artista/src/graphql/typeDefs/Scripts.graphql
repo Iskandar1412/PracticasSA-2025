@@ -1,0 +1,34 @@
+mutation CreateCancion($input: CancionInput!) {
+    createCancion(input: $input) {
+        album_id
+        artista_id
+        duracion
+        fecha_lanzamiento
+        titulo
+    }
+}
+
+{
+    "input": {
+        "album_id": 1,
+        "artista_id": 1,
+        "duracion": 150,
+        "fecha_lanzamiento": "12-12-2025",
+        "titulo": "fdddd"
+    }
+}
+
+PostMan
+
+{
+    "query": "mutation { agregarArtista(nombre: \"Nuevo Artista\", genero_musical: \"Rock\", pais_origen: \"Argentina\") { id nombre genero_musical pais_origen fecha_registro } }"
+}
+
+{
+    "query": "mutation AgregarArtista($nombre: String!, $genero: String, $pais: String) { agregarArtista(nombre: $nombre, genero_musical: $genero, pais_origen: $pais) { id nombre genero_musical pais_origen fecha_registro } }",
+    "variables": {
+        "nombre": "Artista con Variables",
+        "genero": "Pop",
+        "pais": "México"
+    }
+}

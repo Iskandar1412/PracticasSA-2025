@@ -1,0 +1,16 @@
+// npx prisma studio
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "mysql"
+    url      = env("DATABASE_URL_MS_ARTISTA")
+}
+
+model Artista {
+    id             Int      @id @default(autoincrement())
+    nombre         String   @db.VarChar(100)
+    genero_musical String?  @db.VarChar(50)
+    pais_origen    String?  @db.VarChar(50)
+}

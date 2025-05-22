@@ -1,0 +1,12 @@
+python -m venv venv (python3 -m venv venv)
+
+// arch
+source venv/bin/activate
+// W
+venv/Scripts\activate
+
+
+-- pip install flask
+-- pip install -r requirements.txt
+
+-- pip freeze > requirements.txt

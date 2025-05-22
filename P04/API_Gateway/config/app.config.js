@@ -1,0 +1,7 @@
+module.exports = {
+    PORT_APP_API_GATEWAY,
+    PORT_APP_MS_ALBUMES,
+    PORT_APP_MS_ARTISTA,
+    PORT_APP_MS_CANCIONES,
+    PORT_APP_MS_REPRODUCCION
+} = proccess.env;

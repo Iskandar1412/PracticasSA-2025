@@ -1,0 +1,50 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ms-ingress
+  namespace: proyecto-sa
+  labels:
+    app: proyecto-sa
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/use-regex: "true"
+spec:
+  ingressClassName: nginx
+  rules:
+    - http:
+        paths:
+          - path: /api/album(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: ms-albumes
+                port:
+                  number: 5100
+          - path: /api/artista(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: ms-artistas
+                port:
+                  number: 5200
+          - path: /api/cancion(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: ms-canciones
+                port:
+                  number: 5300
+          - path: /api/reproduccion(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: ms-reproducciones
+                port:
+                  number: 5400
+          - path: /api/chat(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: ms-chatbot
+                port:
+                  number: 5500

@@ -1,0 +1,79 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-reproducciones
+  namespace: proyecto-sa
+  annotations:
+    cloud.google.com/neg: '{"ingress": true}'
+spec:
+  selector:
+    app: ms-reproducciones
+  ports:
+    - protocol: TCP
+      port: 5400
+      targetPort: 5400
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-reproducciones
+  namespace: proyecto-sa
+  labels:
+    app: ms-reproducciones
+spec:
+  selector:
+    matchLabels:
+      app: ms-reproducciones
+  template:
+    metadata:
+      labels:
+        app: ms-reproducciones
+    spec:
+      containers:
+        - name: ms-albumes
+          image: iskandar1412/pruebas-sa:reproduccion
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5400
+          env:
+            - name: DB_HOST_MS_REPRODUCCION
+              valueFrom:
+                configMapKeyRef:
+                  name: ms-reproducciones-config
+                  key: DB_HOST_MS_REPRODUCCION
+            - name: DB_PORT_MS_REPRODUCCION
+              valueFrom:
+                configMapKeyRef:
+                  name: ms-reproducciones-config
+                  key: DB_PORT_MS_REPRODUCCION
+            - name: DB_MS_REPRODUCCION
+              valueFrom:
+                configMapKeyRef:
+                  name: ms-reproducciones-config
+                  key: DB_MS_REPRODUCCION
+            - name: PORT_APP_MS_REPRODUCCION
+              valueFrom:
+                configMapKeyRef:
+                  name: ms-reproducciones-config
+                  key: PORT_APP_MS_REPRODUCCION
+            - name: DATABASE_MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: database-secret
+                  key: DATABASE_MYSQL_USER
+            - name: DATABASE_MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: database-secret
+                  key: DATABASE_MYSQL_PASSWORD
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "125m"
+            limits:
+              memory: "128Mi"
+              cpu: "125m"
+
+# kubectl apply -f reproducciones.yaml
+# kubectl delete -f reproducciones.yaml

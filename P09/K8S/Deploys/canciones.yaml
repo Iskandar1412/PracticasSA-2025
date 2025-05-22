@@ -1,0 +1,59 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-canciones
+  namespace: proyecto-sa
+  annotations:
+    cloud.google.com/neg: '{"ingress": true}'
+spec:
+  selector:
+    app: ms-canciones
+  ports:
+    - protocol: TCP
+      port: 5300
+      targetPort: 5300
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-canciones
+  namespace: proyecto-sa
+  labels:
+    app: ms-canciones
+spec:
+  selector:
+    matchLabels:
+      app: ms-canciones
+  template:
+    metadata:
+      labels:
+        app: ms-canciones
+    spec:
+      containers:
+        - name: ms-canciones
+          image: iskandar1412/pruebas-sa:cancion
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5300
+          env:
+            - name: PORT_APP_MS_CANCIONES
+              valueFrom:
+                configMapKeyRef:
+                  name: ms-canciones-config
+                  key: PORT_APP_MS_CANCIONES
+            - name: DATABASE_URL_MS_CANCIONES
+              valueFrom:
+                configMapKeyRef:
+                  name: ms-canciones-config
+                  key: DATABASE_URL_MS_CANCIONES
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "125m"
+            limits:
+              memory: "256Mi"
+              cpu: "125m"
+
+# kubectl apply -f canciones.yaml
+# kubectl delete -f canciones.yaml

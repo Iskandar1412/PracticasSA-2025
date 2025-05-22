@@ -1,0 +1,27 @@
+scalar DateTime
+
+type Cancion {
+    id: Int!
+    titulo: String!
+    duracion: Int!
+    artista_id: Int!
+    album_id: Int!
+    fecha_lanzamiento: DateTime
+}
+
+input CancionInput {
+    titulo: String!
+    duracion: Int!
+    artista_id: Int!
+    album_id: Int!
+    fecha_lanzamiento: DateTime
+}
+
+type Query {
+    cancion(id: Int!): Cancion
+    canciones: [Cancion]
+}
+
+type Mutation {
+    createCancion(input: CancionInput!): Cancion
+}

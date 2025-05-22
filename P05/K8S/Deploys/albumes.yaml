@@ -1,0 +1,78 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-albumes
+  namespace: proyecto-sa
+spec:
+  selector:
+    app: ms-albumes
+  ports:
+    - protocol: TCP
+      port: 5100
+      targetPort: 5100
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-albumes
+  namespace: proyecto-sa
+  labels:
+    app: ms-albumes
+spec:
+  selector:
+    matchLabels:
+      app: ms-albumes
+  template:
+    metadata:
+      labels:
+        app: ms-albumes
+    spec:
+      containers:
+        - name: ms-albumes
+          image: iskandar1412/pruebas-sa:album
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5100
+          env:
+            - name: DB_HOST_MS_ALBUMES
+              valueFrom:
+                configMapKeyRef:
+                  name: ms-albumes-config
+                  key: DB_HOST_MS_ALBUMES
+            - name: DB_PORT_MS_ALBUMES
+              valueFrom:
+                configMapKeyRef:
+                  name: ms-albumes-config
+                  key: DB_PORT_MS_ALBUMES
+            - name: DB_MS_ALBUMES
+              valueFrom:
+                configMapKeyRef:
+                  name: ms-albumes-config
+                  key: DB_MS_ALBUMES
+            - name: PORT_APP_MS_ALBUMES
+              valueFrom:
+                configMapKeyRef:
+                  name: ms-albumes-config
+                  key: PORT_APP_MS_ALBUMES
+            - name: DATABASE_MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: database-secret
+                  key: DATABASE_MYSQL_USER
+            - name: DATABASE_MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: database-secret
+                  key: DATABASE_MYSQL_PASSWORD
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+
+
+# kubectl apply -f albumes.yaml
+# kubectl delete -f albumes.yaml

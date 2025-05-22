@@ -1,0 +1,85 @@
+//Ruta - http:/ip/api/album/albums
+//-- JSON
+//POST
+{
+	"titulo": "Waka Waka",
+	"artista_id": 2,
+	"fecha_lanzamiento": "2012-05-12",
+	"genero_musical": "Pop"
+}
+//GET No requiere nada
+
+//Ruta - http://ip/api/artista/artista/graphql
+//POST
+//-Query
+mutation CreateArtista($input: ArtistaInput!) {
+	createArtista(input: $input) {
+		nombre
+		pais_origen
+		genero_musical
+	}
+}
+
+//-Variables
+{
+	"input": {
+		"genero_musical": "rock",
+		"nombre": "jose",
+		"pais_origen": "El Salvador"
+	}
+}
+//OBTENER INFORMACION
+//-Query
+query Artistas {
+	artistas {
+		id
+		nombre
+		pais_origen
+		genero_musical
+	}
+}
+//Ruta - http://ip/api/cancion/cancion/graphql
+//POST
+//-Query
+mutation Mutation($input: CancionInput!) {
+	createCancion(input: $input) {
+		artista_id
+		duracion
+		id
+		fecha_lanzamiento
+		titulo
+	}
+}
+
+//-Variables
+{
+	"input": {
+		"artista_id": 2,
+		"duracion": 150,
+		"titulo": "Morfonica",
+		"album_id": 1,
+		"fecha_lanzamiento": "12-25-2025"
+	  
+	}
+  }
+//OBTENER INFORMACION
+//-Query
+query Canciones {
+	canciones {
+		album_id
+		artista_id
+		duracion
+		fecha_lanzamiento
+		id
+		titulo
+	}
+}
+//Ruta - http:/ip/api/reproduccion/playlists
+//-- JSON
+//POST
+{
+	"nombre": "Jose",
+	"usuario_id": 2,
+	"fecha_creacion": "2012-05-12"
+}
+//GET No requiere nada

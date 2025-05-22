@@ -1,0 +1,42 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: cronjob-fecha
+  namespace: proyecto-sa
+spec:
+  schedule: "*/5 * * * *"
+  successfulJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: cronjob-fecha
+              image: iskandar1412/pruebas-sa:cronjob
+              env:
+                - name: DB_HOST_MS_ALBUMES
+                  valueFrom:
+                    configMapKeyRef:
+                      name: ms-albumes-config
+                      key: DB_HOST_MS_ALBUMES
+                - name: DB_PORT_MS_ALBUMES
+                  valueFrom:
+                    configMapKeyRef:
+                      name: ms-albumes-config
+                      key: DB_PORT_MS_ALBUMES
+                - name: DB_MS_ALBUMES
+                  valueFrom:
+                    configMapKeyRef:
+                      name: ms-albumes-config
+                      key: DB_MS_ALBUMES
+                - name: DATABASE_MYSQL_USER
+                  valueFrom:
+                    secretKeyRef:
+                      name: database-secret
+                      key: DATABASE_MYSQL_USER
+                - name: DATABASE_MYSQL_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: database-secret
+                      key: DATABASE_MYSQL_PASSWORD
+          restartPolicy: OnFailure

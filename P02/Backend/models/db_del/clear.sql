@@ -1,0 +1,6 @@
+DROP PROCEDURE IF EXISTS login_usuario;
+DROP PROCEDURE IF EXISTS registrar_rol;
+DROP PROCEDURE IF EXISTS registrar_administrador;
+DROP PROCEDURE IF EXISTS registrar_usuario;
+DROP PROCEDURE IF EXISTS buscar_usuario;
+DROP PROCEDURE IF EXISTS cambio_rol;

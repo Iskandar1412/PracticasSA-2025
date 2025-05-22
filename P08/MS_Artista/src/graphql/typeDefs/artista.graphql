@@ -1,0 +1,21 @@
+type Artista {
+    id: Int!
+    nombre: String!
+    genero_musical: String
+    pais_origen: String
+}
+
+input ArtistaInput {
+    nombre: String!
+    genero_musical: String
+    pais_origen: String
+}
+
+type Query {
+    artista(id: Int!): Artista
+    artistas: [Artista]
+}
+
+type Mutation {
+    createArtista(input: ArtistaInput!): Artista
+}

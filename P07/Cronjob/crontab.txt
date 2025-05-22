@@ -1,0 +1,1 @@
+*/5 * * * * root . /app/.env && python3 /app/main.py >> /app/logs.txt 2>&1

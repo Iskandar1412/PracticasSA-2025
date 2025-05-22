@@ -1,0 +1,90 @@
+services:
+  microservice_albumes:
+    build: ./MS_Albumes
+    container_name: 'microservice_albumes'
+    environment:
+      DB_HOST_MS_ALBUMES: sa
+      # DB_HOST_MS_ALBUMES: "127.0.0.1"
+      # DB_HOST_MS_ALBUMES: "0.0.0.0"
+      # DB_HOST_MS_ALBUMES: localhost
+      DB_PORT_MS_ALBUMES: 3306
+      DB_USER_MS_ALBUMES: root
+      DB_PASSWORD_MS_ALBUMES: iskandar
+      DB_MS_ALBUMES: MS_PR4_Album
+      PORT_APP_MS_ALBUMES: 5100
+    ports:
+      - "5100:5100"
+      
+  microservice_artistas:
+    build: ./MS_Artista
+    container_name: 'microservice_artistas'
+    environment:
+      DB_HOST_MS_ARTISTA: sa
+      # DB_HOST_MS_ARTISTA: "127.0.0.1"
+      # DB_HOST_MS_ARTISTA: "0.0.0.0"
+      # DB_HOST_MS_ARTISTA: localhost
+      DB_PORT_MS_ARTISTA: 3306
+      DB_USER_MS_ARTISTA: root
+      DB_PASSWORD_MS_ARTISTA: iskandar
+      DB_MS_ARTISTA: MS_PR4_Artista
+      PORT_APP_MS_ARTISTA: 5200
+      DATABASE_URL_MS_ARTISTA: "mysql://root:iskandar@sa:3306/MS_PR4_Artista"
+      # DATABASE_URL_MS_ARTISTA: "mysql://root:iskandar@127.0.0.1:3306/MS_PR4_Artista"
+      # DATABASE_URL_MS_ARTISTA: "mysql://root:iskandar@0.0.0.0:3306/MS_PR4_Artista"
+      # DATABASE_URL_MS_ARTISTA: "mysql://root:iskandar@localhost:3306/MS_PR4_Artista"
+    ports:
+      - "5200:5200"
+
+  microservice_canciones:
+    build: ./MS_Canciones
+    container_name: 'microservice_canciones'
+    environment:
+      DB_HOST_MS_CANCIONES: sa
+      # DB_HOST_MS_CANCIONES: "127.0.0.1"
+      # DB_HOST_MS_CANCIONES: "0.0.0.0"
+      # DB_HOST_MS_CANCIONES: localhost
+      DB_PORT_MS_CANCIONES: 3306
+      DB_USER_MS_CANCIONES: root
+      DB_PASSWORD_MS_CANCIONES: iskandar
+      DB_MS_CANCIONES: MS_PR4_Cancion
+      PORT_APP_MS_CANCIONES: 5300
+      DATABASE_URL_MS_CANCIONES: "mysql://root:iskandar@sa:3306/MS_PR4_Cancion"
+      # DATABASE_URL_MS_CANCIONES: "mysql://root:iskandar@127.0.0.1:3306/MS_PR4_Cancion"
+      # DATABASE_URL_MS_CANCIONES: "mysql://root:iskandar@0.0.0.0:3306/MS_PR4_Cancion"
+      # DATABASE_URL_MS_CANCIONES: "mysql://root:iskandar@localhost:3306/MS_PR4_Cancion"
+    ports:
+      - "5300:5300"
+
+  microservice_reproduccion:
+    build: ./MS_Reproduccion
+    container_name: 'microservice_reproduccion'
+    environment:
+      DB_HOST_MS_REPRODUCCION: sa
+      # DB_HOST_MS_REPRODUCCION: "127.0.0.1"
+      # DB_HOST_MS_REPRODUCCION: "0.0.0.0"
+      # DB_HOST_MS_REPRODUCCION: localhost
+      DB_PORT_MS_REPRODUCCION: 3306
+      DB_USER_MS_REPRODUCCION: root
+      DB_PASSWORD_MS_REPRODUCCION: iskandar
+      DB_MS_REPRODUCCION: MS_PR4_Album
+      PORT_APP_MS_REPRODUCCION: 5400
+    ports:
+      - "5400:5400"
+
+  # microservice_albumes:
+  #   image: "ms-albumes"
+  #   container_name: "microservice_albumes"
+  #   environment:
+  #     DB_HOST_MS_ALBUMES: localhost
+  #     DB_PORT_MS_ALBUMES: 3306
+  #     DB_USER_MS_ALBUMES: root
+  #     DB_PASSWORD_MS_ALBUMES: iskandar
+  #     DB_MS_ALBUMES: MS_PR4_Album
+  #     PORT_APP_MS_ALBUMES: 5100
+  #   ports:
+  #     - "5100:5100"
+
+#  docker network ls  
+#  docker network connect p04_default sa
+#  docker network inspect p04_default
+#  si están todos en el mismo usarán sa

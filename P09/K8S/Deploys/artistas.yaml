@@ -1,0 +1,59 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-artistas
+  namespace: proyecto-sa
+  annotations:
+    cloud.google.com/neg: '{"ingress": true}'
+spec:
+  selector:
+    app: ms-artistas
+  ports:
+    - protocol: TCP
+      port: 5200
+      targetPort: 5200
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-artistas
+  namespace: proyecto-sa
+  labels:
+    app: ms-artistas
+spec:
+  selector:
+    matchLabels:
+      app: ms-artistas
+  template:
+    metadata:
+      labels:
+        app: ms-artistas
+    spec:
+      containers:
+        - name: ms-artistas
+          image: iskandar1412/pruebas-sa:artista
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5200
+          env:
+            - name: PORT_APP_MS_ARTISTA
+              valueFrom:
+                configMapKeyRef:
+                  name: ms-artistas-config
+                  key: PORT_APP_MS_ARTISTA
+            - name: DATABASE_URL_MS_ARTISTA
+              valueFrom:
+                configMapKeyRef:
+                  name: ms-artistas-config
+                  key: DATABASE_URL_MS_ARTISTA
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "125m"
+            limits:
+              memory: "256Mi"
+              cpu: "125m"
+
+# kubectl apply -f artistas.yaml
+# kubectl delete -f artistas.yaml

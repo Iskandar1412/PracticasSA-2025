@@ -1,0 +1,18 @@
+// npx prisma studio
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "mysql"
+    url      = env("DATABASE_URL_MS_CANCIONES")
+}
+
+model Cancion {
+    id                  Int      @id @default(autoincrement())
+    titulo              String   @db.VarChar(100)
+    duracion            Int  
+    artista_id          Int
+    album_id            Int
+    fecha_lanzamiento   DateTime?
+}

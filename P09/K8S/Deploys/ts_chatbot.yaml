@@ -1,0 +1,66 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-chatbot
+  namespace: proyecto-sa
+  annotations:
+    cloud.google.com/neg: '{"ingress": true}'
+spec:
+  selector:
+    app: ms-chatbot
+  ports:
+    - protocol: TCP
+      port: 5500
+      targetPort: 5500
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-chatbot
+  namespace: proyecto-sa
+  labels:
+    app: ms-chatbot
+spec:
+  selector:
+    matchLabels:
+      app: ms-chatbot
+  template:
+    metadata:
+      labels:
+        app: ms-chatbot
+    spec:
+      containers:
+        - name: ms-albumes
+          image: iskandar1412/pruebas-sa:chatbot
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5500
+          env:
+            - name: ALBUMES_MICROSERVICIO_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: conexion-config
+                  key: ALBUMES_MICROSERVICIO_URL
+            - name: ARTISTAS_MICROSERVICIO_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: conexion-config
+                  key: ARTISTAS_MICROSERVICIO_URL
+            - name: CANCIONES_MICROSERVICIO_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: conexion-config
+                  key: CANCIONES_MICROSERVICIO_URL
+            - name: REPRODUCCIONES_MICROSERVICIO_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: conexion-config
+                  key: REPRODUCCIONES_MICROSERVICIO_URL
+          resources:
+            requests:
+              memory: "300Mi"
+              cpu: "256m"
+            limits:
+              memory: "300Mi"
+              cpu: "256m"
